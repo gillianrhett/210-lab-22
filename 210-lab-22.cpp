@@ -133,29 +133,35 @@ class DoublyLinkedList {
             cout << "Invalid index." << endl;
             return;
         }
-        if (!head) { return; } // the list is already empty
-        Node* current = head;
-        int i = 0;
-        if (pos == 0) { // special case: delete the head
-            pop_front();
-            return;
+        if (!head) { 
+            cout << "The list is already empty." << endl; 
         }
-        while (current && i < pos) {
-            current = current->next;
-        }
-        if (!current) { // we have reached the end of the list
-            if (i != pos) // the chosen position is greater than the last index
-                cout << "Invalid index." << endl;
-            else { // we are at the last item
-                pop_back();
+        else { // the list is not empty
+            if (pos == 0) { // special case: delete the head
+                pop_front();
             }
-        }
-        else { // the item to delete is in the middle
-            Node* predecessor = current->prev;
-            Node* successor = current->next->next;
-            predecessor->next = successor;
-            successor->prev = predecessor;
-            delete current;
+            else { // the item to delete is not the head
+                Node* current = head;
+                int i = 0;
+                while (current && i < pos) {
+                    current = current->next;
+                    i++;
+                }
+                if (!current) { // we have reached the end of the list
+                    if (i != pos) // the chosen position is greater than the last index
+                        cout << "Invalid index." << endl;
+                    else { // we are at the last item
+                        pop_back();
+                    }
+                }
+                else { // the item to delete is in the middle
+                    Node* predecessor = current->prev;
+                    Node* successor = current->next->next;
+                    predecessor->next = successor;
+                    successor->prev = predecessor;
+                    delete current;
+                }
+            }
         }
     }
 
