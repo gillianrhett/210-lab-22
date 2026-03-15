@@ -83,11 +83,14 @@ class DoublyLinkedList {
 
     void delete_val(int value) {
         if (!head) return; // Empty list
-            Node* temp = head;
-        while (temp && temp->data != value)
+        
+        Node* temp = head;
+        while (temp && temp->data != value) // traverse the list until value found or end
             temp = temp->next;
+        
         if (!temp) return; // Value not found
-        if (temp->prev) {
+        
+        if (temp->prev) { // if temp isn't the head
             temp->prev->next = temp->next;
         } else {
             head = temp->next; // Deleting the head
@@ -121,11 +124,25 @@ class DoublyLinkedList {
     }
 
     void pop_front() {
-        
+        if (head) {
+            Node* newHead = head->next;
+            newHead->prev = nullptr;
+            delete head;
+            head = newHead;
+        }
+        else
+            cout << "The list is already empty." << endl;
     }
 
     void pop_back() {
-
+        if(tail) {
+            Node* newTail = tail->prev;
+            newTail->next = nullptr;
+            delete tail;
+            tail = newTail;
+        }
+        else
+            cout << "The list is already empty." << endl;
     }
 
     void delete_pos(int pos) { // delete the item at index #pos; head is 0
@@ -156,7 +173,7 @@ class DoublyLinkedList {
                 }
                 else { // the item to delete is in the middle
                     Node* predecessor = current->prev;
-                    Node* successor = current->next->next;
+                    Node* successor = current->next;
                     predecessor->next = successor;
                     successor->prev = predecessor;
                     delete current;
