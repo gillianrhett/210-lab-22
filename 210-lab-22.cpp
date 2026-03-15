@@ -3,16 +3,6 @@
 using namespace std;
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
-/*
-_ Create a method delete_pos() that will delete a node, not by its value, but by position. 
-    The method should also cover the case where we want to delete the head or tail node.
-_ Create a method pop_front(), that will delete the head node.
-_ Create a method pop_back() that will delete the tail node.
-x Update the current delete() method to a better name, delete_val(). Keep the functionality
-    in the method that will still delete the head node, even though the new pop_front() 
-    method will also do that. This is fine to code both, for the purposes of class completeness.
-*/
-
 class DoublyLinkedList {
     private:
     struct Node {
@@ -164,7 +154,7 @@ class DoublyLinkedList {
                     current = current->next;
                     i++;
                 }
-                if (!current) { // we have reached the end of the list
+                if (!current->next) { // we have reached the end of the list
                     if (i != pos) // the chosen position is greater than the last index
                         cout << "Invalid index." << endl;
                     else { // we are at the last item
@@ -201,6 +191,22 @@ DoublyLinkedList list;
     list.print();
     cout << "List backward: ";
     list.print_reverse();
+    
+    // I added this code to demo my new functions
+    cout << "Deleting the 4th item (index 3)..." << endl;
+    list.delete_pos(3);
+    cout << "List forward: ";
+    list.print();
+    cout << "Deleting the head (uses pop_front)..." << endl;
+    list.delete_pos(0);
+    cout << "List forward: ";
+    list.print();
+    cout << "Deleting the tail (uses pop_back)..." << endl;
+    list.delete_pos(size - 3); // tail's index is size - 3 because I deleted 2 items
+    cout << "List forward: ";
+    list.print();
+    
+    // original code:
     cout << "Deleting list, then trying to print.\n";
     list.~DoublyLinkedList();
     cout << "List forward: ";
